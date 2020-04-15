@@ -1,4 +1,4 @@
-const {schema} = require('mongoose')
+const {Schema} = require('mongoose')
 /************************** Room Schema **************************/
 //name : String
 //participant: [user_id]

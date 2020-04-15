@@ -1,5 +1,5 @@
 
-const {Schema,ObjectId} = require('mongoose')
+const {Schema,ObjectId} = require('mongoose');
 
 /************************** User Schema **************************/
 //Username-String
@@ -12,7 +12,7 @@ const {Schema,ObjectId} = require('mongoose')
 const userSchema = new Schema(
     {
         username:{
-            type:String,
+            type:String, 
             required:true
         },
         password:{
@@ -23,13 +23,13 @@ const userSchema = new Schema(
             type:String,
             required:true
         },
-        contacts:[ObjectId],
-        last_login:{
+        photo_url:String,
+        contacts:[ObjectId], //Contact is an array of usersId
+        last_login:{         
             type:Date,
             required:true
         }
     },
     {
-        timestamp:true
-    }
-)
+        timestamp:true  //timestamp so mongoose will manage creation and updpate date 
+    });
