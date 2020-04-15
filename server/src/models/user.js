@@ -33,3 +33,6 @@ const userSchema = new Schema(
     {
         timestamp:true  //timestamp so mongoose will manage creation and updpate date 
     });
+
+const User = mongoose.model("user", userSchema);
+module.exports = User;
