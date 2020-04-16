@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/main.js",
     "dev": "nodemon src/main.js",
+    "rundb": "C:/Users/Sidouw/mongodb/bin/mongod --dbpath C:/Users/Sidouw/mongodb_data",
     "lint": "eslint src/"
   },
   "repository": "https://github.com/sidouw/comunium-",
@@ -15,7 +16,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.22.0",
-    "mongoose": "^5.9.9"
+    "mongoose": "^5.9.9",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

@@ -1,17 +1,16 @@
 const express = require("express");
-const morgan = require("morgan");
-const helmet = require("helmet");
-const cors = require("cors");
-const mongoose = require("mongoose");
+require('dotenv').config();
 
+require('./db/mongoose');
+const usersroute = require('./Routes/users')
 
-/************************** configuration section **************************/
+const app = express()
 
-//  setup the env variable found in .env
-require("dotenv").config();
+app.use(express.json())
+app.use(usersroute)
 
-//  Setup the mongoDB connection with mongoose
-mongoose.connect(process.env.DATABASE_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+app.listen(process.env.PORT,()=>{
+  console.log('server started on ',process.env.PORT);
+  
+})
+
