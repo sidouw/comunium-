@@ -1,5 +1,5 @@
 
-const mongoose = require('mongoose');
+const {Schema,ObjectId,model} = require('mongoose');
 const jwt = require('jsonwebtoken')
 /************************** User Schema **************************/
 //Username-String
@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 //contact - [user_ids]
 //registred_date - Date
 //last_login - Date
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
     {
         username:{
             type:String, 
@@ -27,9 +27,8 @@ const userSchema = new mongoose.Schema(
             type:String,
             required:true
         }],
-
         photo_url:String,
-        contacts:[mongoose.ObjectId], //Contact is an array of usersId
+        contacts:[ObjectId], //Contact is an array of usersId
         last_login:{
             type:Date
         }
@@ -70,5 +69,5 @@ userSchema.statics.findByCred = async (username,password)=>{
     }
 }
 
-const User = mongoose.model("user", userSchema);
+const User = model("user", userSchema);
 module.exports = User;

@@ -1,0 +1,7 @@
+/*
+class 
+role name 
+priviligese 
+server 
+id
+*/

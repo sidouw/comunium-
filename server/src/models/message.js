@@ -1,4 +1,4 @@
-const {Schema,ObjectId} = require('mongoose');
+const {Schema,model,ObjectId} = require('mongoose');
 /************************** Message Schema **************************/
 //from : user_id
 //to_user : bool
@@ -11,11 +11,7 @@ const messageSchema = new Schema({
         type:ObjectId,
         required:true
     },
-    sent_to_user : {
-        type:Boolean,
-        required:true
-    },
-    reciever :{
+    roomId :{
         type:ObjectId,
         required:true
     },
@@ -28,5 +24,5 @@ const messageSchema = new Schema({
 {
     timestamps:true
 });
-const Message = mongoose.model("message", messageSchema);
+const Message = model("message", messageSchema);
 module.exports = Message;

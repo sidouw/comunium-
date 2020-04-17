@@ -17,7 +17,6 @@ router.post('/users/login',async (req,res)=>{
 })
 
 router.post('/users/logout',auth,async (req,res)=>{
-    
     try {
         req.user.tokens =req.user.tokens.filter((token)=> req.token !== token)
         await req.user.save()
@@ -28,7 +27,6 @@ router.post('/users/logout',auth,async (req,res)=>{
         res.status(400).send(error)
     }
 })
-
 router.post('/users',async (req,res)=>{
 
     try {
@@ -39,7 +37,6 @@ router.post('/users',async (req,res)=>{
         res.status(400).send(error)
     }
 })
-
 router.patch('/users',auth,async(req,res)=>{
     const allowedupdates = ['username','password','state']
     
@@ -59,7 +56,6 @@ router.patch('/users',auth,async(req,res)=>{
         res.status(500).send()
     }
 })
-
 router.get('/users/:id',async (req,res)=>{
     const user =await User.findOne({_id:req.params.id})
     if(! user){
@@ -67,7 +63,6 @@ router.get('/users/:id',async (req,res)=>{
     }
     res.send(user)
 })
-
 router.delete('/users',auth,async (req,res)=>{
     try {
         await req.user.remove()

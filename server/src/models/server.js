@@ -1,11 +1,8 @@
 const {Schema,model} = require('mongoose')
 /************************** Room Schema **************************/
 //name : String
-//participant: [user_id]
-//n_participant
-//
-//password :String
-//roles : [{roles_name:[user_id]}]
+//rooms -[ { Role : objectid } ] to check 
+//password : String
 const roomSchema = new Schema({
 
 },{
