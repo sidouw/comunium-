@@ -6,7 +6,7 @@ const auth = async (req,res,next)=>{
 
     try {
         const token = req.header('Authorization').replace('Bearer ','')
-        
+        // const token = req.cookies.token
         const decoded = jwt.verify(String(token),process.env.SECRET)
         const user =await User.findOne({_id:decoded.id,tokens:token})
         
@@ -17,7 +17,7 @@ const auth = async (req,res,next)=>{
         req.user=user
         next()
     } catch (error) {        
-        res.status(401).send('Please authenticate')
+        res.status(401).send({error:'Please authenticate'})
     }
 
 }

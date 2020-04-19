@@ -17,7 +17,8 @@ const userSchema = new Schema(
         },
         email :{
             type:String, 
-            required:true
+            required:true,
+            unique :true
         }
         ,
         password:{
@@ -25,8 +26,7 @@ const userSchema = new Schema(
             required:true
         },
         state:{
-            type:String,
-            required:true
+            type:String
         },
         tokens : [{
             type:String,
@@ -66,7 +66,7 @@ userSchema.statics.findByCred = async (username,password)=>{
     try {
         const user = await User.findOne({username,password})
         if (!user) {
-            throw new Error('Unable to login')
+            throw  Error('Unable to login')
         }
         return user
     } catch (error) {

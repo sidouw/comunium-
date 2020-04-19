@@ -9,10 +9,10 @@ import Header from '../Components/Header'
 
 const App =() =>{
   
-  const [loged,setloged] = useState(true)
-  
+  const [loged,setloged] = useState(false)
+  const [user,setUser] = useState({contacts:[],username:'',email:'',state:''})
   return(
-  <context.Provider value = {{loged,setloged}}>
+  <context.Provider value = {{loged,setloged,user,setUser}}>
   <BrowserRouter>
   <div>
   <Header/>
