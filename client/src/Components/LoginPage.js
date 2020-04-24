@@ -2,7 +2,6 @@ import React,{useContext,useEffect} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {authanticate} from '../utils/auth'
 import cookies from 'js-cookie'
-import {Redirect} from 'react-router-dom'
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
 import context from '../context/context'
@@ -10,7 +9,7 @@ import 'react-tabs/style/react-tabs.css';
 
 
 const LoginPage = (props)=>{
-  const  {loged,setloged}=  useContext(context)
+  const  {setloged}=  useContext(context)
   useEffect(()=>{
     const token = cookies.get('token')
     if(token){
@@ -22,9 +21,6 @@ const LoginPage = (props)=>{
     }
   },[])
     return (
-      loged?
-      <Redirect to = '/dashboard'/>
-      :
     <div>
     <Tabs>
     <TabList>

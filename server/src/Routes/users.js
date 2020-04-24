@@ -65,11 +65,11 @@ router.get('/users/:id',async (req,res)=>{
     try {
         const user =await User.findOne({_id:req.params.id})
         if(! user){
-            return  res.status(400).send()
+            return  res.status(400).send({error:'User Not Found'})
         }
         res.send(user)
     } catch (error) {
-        res.status(400).send()
+        res.status(400).send({error})
     }
 
 })

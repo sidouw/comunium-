@@ -4,23 +4,27 @@ import context from '../context/context'
 import LoginPage from '../Components/LoginPage'
 import ProfilePage from '../Components/ProfilePage'
 import DashboardPage from '../Components/DashboardPage'
-import Header from '../Components/Header'
+import PrivateRoute from './PrivateRoute'
+import PublicRoute from './PublicRoute'
+import ChatPage from '../Components/ChatPage'
 
 
 const App =() =>{
   
   const [loged,setloged] = useState(false)
-  const [user,setUser] = useState({contacts:[],username:'',email:'',state:''})
+  const [loading,setloading] = useState(true)
+  const [user,setUser] = useState({contacts:[],username:'',email:'',state:'',_id:''})
   return(
-  <context.Provider value = {{loged,setloged,user,setUser}}>
+    
+  <context.Provider value = {{loged,setloged,user,setUser,loading,setloading}}>
   <BrowserRouter>
   <div>
-  <Header/>
   <Switch>
-  <Route path ='/' component ={LoginPage} exact={true}/>
-  <Route path ='/dashboard' component ={DashboardPage}/>
-  <Route path ='/Help' component ={()=>(<p>Fuuuucckkkk</p>)}/>
-  <Route path = '/profile/:id' component= {ProfilePage}/>
+  <PublicRoute path ='/' component ={LoginPage} exact={true}/>
+  <PrivateRoute path ='/dashboard' component ={DashboardPage}/>
+  <PrivateRoute path ='/Chat' component ={ChatPage}/> 
+  <PrivateRoute path = '/profile/:id' component= {ProfilePage}/>
+  <PrivateRoute path = '/profile' component= {ProfilePage}/>
   <Route  component= {()=><p>fuuukkk</p>}/>
   </Switch>
   </div>

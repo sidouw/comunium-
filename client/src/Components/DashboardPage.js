@@ -7,8 +7,8 @@ import context from '../context/context'
 const DashboardPage = (props)=>{
     const {setloged} = useContext(context)
     const oncli = ()=>{
-        authanticate(cookies.get('token')).then(()=>{
-            console.log('authed')
+        authanticate(cookies.get('token')).then((data)=>{
+            console.log('authed',data)
         })
     }
     const onlogout = ()=>{

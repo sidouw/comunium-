@@ -5,6 +5,8 @@
  const Header = ()=>(
      <div>
      <Link to ='/'><h1>Comnium</h1></Link>
+     <Link to='/chat'>Chat</Link>
+     <Link to='/profile'>Profile</Link>
      </div>
  )
 
