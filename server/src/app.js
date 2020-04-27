@@ -6,6 +6,8 @@ const cors = require('cors')
 const http = require('http')
 
 const usersroute = require('./Routes/users')
+const roomsroute = require('./Routes/rooms')
+const messagesroute = require('./Routes/messages')
 const handleChat = require('./Utils/chat')
 
 
@@ -19,7 +21,21 @@ app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 app.use(usersroute)
+app.use(roomsroute)
+app.use(messagesroute)
+
+
 handleChat(server)
 
+// const Room = require('./models/room')
+// const main = async()=>{
+//     const room = await Room.findById('5ea644bdd8295545cc0652df')
+//     console.log(room);
+//     console.log('_________________');
+//     await room.populate('users').execPopulate()
+//     console.log(room);
+
+// }
+// main()
 
 module.exports = {server}

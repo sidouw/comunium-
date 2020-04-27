@@ -32,14 +32,25 @@ const userSchema = new Schema(
             type:String,
             required:true
         }],
+
         photo_url:String,
-        contacts:[ObjectId], //Contact is an array of usersId
+
+        contacts:[{
+            type:ObjectId,
+            required : true
+        }], //Contact is an array of usersId
+
         last_login:{
             type:Date
-        }
-    },
-    {
-        timestamp:true  //timestamp so mongoose will manage creation and updpate date 
+        },
+
+        friendrequestes : [{
+            type:ObjectId,
+            required : true
+        }]
+        
+    },{
+        timestamps:true
     });
 
 

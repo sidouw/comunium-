@@ -11,7 +11,7 @@ const messageSchema = new Schema({
         type:ObjectId,
         required:true
     },
-    roomId :{
+    room :{
         type:ObjectId,
         required:true
     },
