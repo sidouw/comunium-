@@ -4,9 +4,11 @@ import context from '../context/context'
 import LoginPage from '../Components/LoginPage'
 import ProfilePage from '../Components/ProfilePage'
 import DashboardPage from '../Components/DashboardPage'
+import ChatPage from '../Components/ChatPage'
+import ChatListPage from '../Components/ChatListPage'
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
-import ChatPage from '../Components/ChatPage'
+
 
 
 const App =() =>{
@@ -23,8 +25,8 @@ const App =() =>{
   <PublicRoute path ='/' component ={LoginPage} exact={true}/>
   <PrivateRoute path ='/dashboard' component ={DashboardPage}/>
   <PrivateRoute path ='/Chat/:id' component ={ChatPage}/> 
+  <PrivateRoute path ='/Chat' component ={ChatListPage}/> 
   <PrivateRoute path = '/profile/:id' component= {ProfilePage}/>
-  <PrivateRoute path = '/profile' component= {ProfilePage}/>
   <Route  component= {()=><p>fuuukkk</p>}/>
   </Switch>
   </div>

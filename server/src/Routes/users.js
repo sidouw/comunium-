@@ -4,7 +4,6 @@ const User = require('../models/user')
 const auth = require('../Utils/auth')
 
 
-
 router.post('/users/login',async (req,res)=>{
     
     try {
@@ -61,6 +60,37 @@ router.get('/users/auth',auth,(req,res)=>{
     res.send(req.user)
 })
 
+//Get friend Requsts
+router.get('/users/f',auth,async (req,res)=>{
+
+    try {
+        await req.user.populate('friendrequestes').execPopulate()
+        res.send(req.user.friendrequestes)
+    } catch (error) {
+        console.log(error) 
+        res.status(400).send({error})
+    }
+
+})
+
+//send Friend Requst
+router.post('/users/f',auth,async (req,res)=>{
+
+    try {   
+        const user =await User.findById(req.body.id)
+        if(user.friendrequestes.includes(req.user._id)){
+            return res.send({error:'request already sent'})
+        }
+        user.friendrequestes.push(req.user._id)
+        await user.save()
+        res.send({ok:'sent'})
+    } catch (error) {
+        console.log(error) 
+        res.status(400).send({error})
+    }
+
+})
+
 router.get('/users/:id',async (req,res)=>{
     try {
         const user =await User.findOne({_id:req.params.id})
@@ -74,7 +104,70 @@ router.get('/users/:id',async (req,res)=>{
 
 })
 
+router.get('/users',async (req,res)=>{
+    try {
+        const user =await User.find()
+        if(! user){
+            return  res.status(400).send({error:'User Not Found'})
+        }
+        res.send(user)
+    } catch (error) {
+        res.status(400).send({error})
+    }
 
+})
+
+//accept decline Friend Requsts 
+router.post('/users/f/:id',auth,async (req,res)=>{
+    try {
+        req.user.friendrequestes = req.user.friendrequestes.filter(friend=>friend!=req.params.id)
+        if(req.body.type === 'A'){
+            const user = await User.findById(req.params.id)
+            user.contacts.push(req.user._id)
+            await user.save()
+            req.user.contacts.push(req.params.id)
+        }
+        await req.user.save()
+        res.send({ok:'done'})
+    } catch (error) {
+        res.status(400).send({error})
+    }
+
+})
+
+//get friends
+router.get('/users/f/:id',auth,async (req,res)=>{
+    try {
+        const users =await User.find({contacts:req.params.id})
+        if(! users){
+            return  res.status(400).send({error:'User Not Found'})
+        }
+        res.send(users)
+    } catch (error) {
+        res.status(400).send({error})
+    }
+
+})
+
+router.delete('/users/f/:id',auth,async (req,res)=>{
+    try {
+        if (!req.user.contacts.includes(req.params.id)) {
+           return res.send({erroe:'Already Deleted'})
+        }
+
+        req.user.contacts = req.user.contacts.filter(friend=>friend!=req.params.id)
+        const user = await User.findById(req.params.id)
+        user.contacts = user.contacts.filter(friend=>friend!=req.user._id)
+        
+        await user.save()
+        await req.user.save()
+
+        res.send({ok:'done'})
+    } catch (error) {
+        res.status(400).send({error})
+    }
+
+})
 
 router.delete('/users',auth,async (req,res)=>{
     try {

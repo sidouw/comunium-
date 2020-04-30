@@ -36,7 +36,7 @@ const userSchema = new Schema(
         photo_url:String,
 
         contacts:[{
-            type:ObjectId,
+            type:String,
             required : true
         }], //Contact is an array of usersId
 
@@ -46,7 +46,8 @@ const userSchema = new Schema(
 
         friendrequestes : [{
             type:ObjectId,
-            required : true
+            required : true,
+            ref:'user'
         }]
         
     },{
@@ -58,6 +59,7 @@ userSchema.methods.toJSON = function () {
     const userObject = this.toObject()
     delete userObject.password
     delete userObject.tokens
+    delete userObject.friendrequestes
     return userObject
 }
 
