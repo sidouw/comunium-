@@ -2,13 +2,12 @@ import React,{useEffect,useState} from 'react'
 import {getFriendsRequests} from '../utils/UsersDataHandler'
 import FriendRequest from './FriendRequest'
 
-const FriendsRequestsList = (props)=>{
+const FriendsRequestsList = ()=>{
 const [Requests,setRequests] = useState([{}])
 const [loading,setloading] = useState(true)
 
 useEffect(()=>{
     getFriendsRequests().then((data)=>{
-        console.log(data)
         setRequests(data)
         setloading(false)
     })

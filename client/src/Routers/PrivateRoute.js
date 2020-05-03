@@ -4,6 +4,7 @@ import cookie from 'js-cookie'
 import Header from '../Components/Header'
 import context from '../context/context'
 import {authanticate} from '../utils/auth'
+import SideBar from '../Components/SideBar'
 
 
 
@@ -29,10 +30,12 @@ const PrivateRoute= ({component:Component,...rest})=>{
         :
         <Route {...rest} component = {(props)=>(
             loged ?
-            <div>
-            <Header/>
+            <>
+            <SideBar/>
+            <div className ='main-content'>
             <Component {...props}/>
-            </div> 
+            </div>
+            </> 
             :
             <Redirect to='/'/>
         )} />

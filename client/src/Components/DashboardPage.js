@@ -1,5 +1,4 @@
 import React,{useContext} from 'react'
-import cookies from 'js-cookie'
 import { authanticate,logout} from '../utils/auth'
 import context from '../context/context'
 
@@ -7,12 +6,12 @@ import context from '../context/context'
 const DashboardPage = (props)=>{
     const {setloged} = useContext(context)
     const oncli = ()=>{
-        authanticate(cookies.get('token')).then((data)=>{
+        authanticate().then((data)=>{
             console.log('authed',data)
         })
     }
     const onlogout = ()=>{
-        logout(cookies.get('token'))
+        logout()
         setloged(false)
         props.history.push('/')
     }

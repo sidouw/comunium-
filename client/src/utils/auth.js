@@ -1,14 +1,15 @@
 
+import cookies from 'js-cookie'
 const url = 'http://127.0.1.1:5001'
 
 
 
-export const authanticate = async(token)=>{
+export const authanticate = async()=>{
 try {
     const data = await fetch(url+'/users/auth',{
         method : 'get',
         headers:{
-           'Authorization':'Bearer '+token
+           'Authorization':'Bearer '+cookies.get('token')
         }
     })
     return await data.json()
@@ -57,13 +58,13 @@ export const  signup = async({username,password,email})=>{
 }
 
 
-export const  logout = async(token)=>{
+export const  logout = async()=>{
 
     try {
         const data= await fetch(url+'/users/logout',{
             method : 'post',
             headers:{
-                'Authorization':'Bearer '+token
+                'Authorization':'Bearer '+cookies.get('token')
              },
             body:''
         })

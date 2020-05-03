@@ -29,13 +29,15 @@ const Submited = (e)=>{
     
 }
 
-    return (<div>
-    <h2>Login</h2>
-    <form  onSubmit = {Submited}>
+    return (
+        
+    <div className='loginform'>
+    <h2 className='loginform__title'>Login</h2>
+    <form className='loginform__form'  onSubmit = {Submited}>
         {error && <p>Wrong Username or Password</p>}
-    <input placeholder='Email' value={user} autoComplete='username' required onChange = {(e)=> setUsernaem(e.target.value)}/>
-    <input placeholder='Password' type='password' required autoComplete='current-password' value={pass} onChange = {(e)=> setPass(e.target.value)}/>
-    <button>Login</button>
+    <input className ='loginform__input' placeholder='Email' value={user} autoComplete='username' required onChange = {(e)=> setUsernaem(e.target.value)}/>
+    <input className ='loginform__input' placeholder='Password' type='password' required autoComplete='current-password' value={pass} onChange = {(e)=> setPass(e.target.value)}/>
+    <button className ='loginform__btn'>Login</button>
     </form>
     </div>)
 }

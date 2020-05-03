@@ -1,20 +1,31 @@
+@import './settings.scss';
+@import './Componnents/container.scss';
+@import './Componnents/Box_Layout.scss';
+@import './Componnents/LogInForm.scss';
+@import './Componnents/SideBar.scss';
+@import './Componnents/item-list.scss';
+@import './Componnents//Chat.scss';
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #2b2e2e;
-  color: white;
+  background: darken($bg-color, 11);;
+  font-size: $font-size;
+  min-width: 360px;
+  color: $white-color;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+body::-webkit-scrollbar {
+  width: 0.25rem;
 }
 
-*{
-  text-decoration: none;
-  color: grey;
+body::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #6649b8;
 }

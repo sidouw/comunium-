@@ -63,7 +63,6 @@ const ProfilePage = (props)=>{
         <h2>{userProfile.username}</h2>
         <h3>{userProfile.email}</h3>
         <p>description : {userProfile.state}</p>
-        <FriendsList id={props.match.params.id}/>
         {!self &&
             <div>
              <button onClick = {isFriend? handleDeleteFriend: handleAddFriend}>{isFriend ? 'Delete Friend': 'Add Friend'}</button>
@@ -71,6 +70,7 @@ const ProfilePage = (props)=>{
              <button onClick = {handleMessage} >Message</button>
              </div>
             }
+
         {self && <FriendsRequestsList/>}
         
         </div>

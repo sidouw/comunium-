@@ -2,9 +2,9 @@ import React from 'react'
 
 
 
- const Message = ({user,time,body})=>
+ const Message = ({sender,time,body})=>
 (    <li>
-    <p>{user}</p>
+    <p>{sender}</p>
     <p>now</p>
     <p>{body}</p>
     </li>)

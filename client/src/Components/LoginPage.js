@@ -5,7 +5,7 @@ import cookies from 'js-cookie'
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
 import context from '../context/context'
-import 'react-tabs/style/react-tabs.css';
+
 
 
 const LoginPage = (props)=>{
@@ -21,7 +21,7 @@ const LoginPage = (props)=>{
     }
   },[])
     return (
-    <div>
+    <div className = 'boxLayout'>
     <Tabs>
     <TabList>
       <Tab>Login</Tab>

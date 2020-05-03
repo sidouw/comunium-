@@ -1,0 +1,61 @@
+.list{
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: auto; /* Add vertical scrollbar */
+    width: 100%;
+}
+
+.item-list{
+    list-style: none;
+    margin: 1rem 0 1rem -2rem;
+    &--item{
+        margin: 1rem 0;
+    }
+
+    &--item-text{
+        font-size: 1.2rem;
+        margin-left: 1rem;
+        min-width: 5rem;
+        max-width: 5rem;
+        text-align: center;
+        display: none;
+    }
+
+    & img{
+          border-radius: 50%;
+          width: 3rem;
+          min-width: 3rem;
+    }
+}
+
+.profile-link{
+    display: none;
+    color: $s-color;
+    margin-left: .7rem;
+    margin-right: .7rem;
+    padding: 0;
+    & svg{
+        max-width: .6rem;
+    }
+  }
+  
+  .chat-link{
+    display: none;
+    color: $p-color;
+    padding: 0;
+    & svg{
+        max-width: .6rem;
+    }
+  }
+
+  .list::-webkit-scrollbar {
+    width: 0.3rem;
+  }
+  
+  .list::-webkit-scrollbar-track {
+    background: none;
+  }
+  
+  .list::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+    background: $fg-color;
+  }

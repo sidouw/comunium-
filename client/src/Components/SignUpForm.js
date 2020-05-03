@@ -25,14 +25,15 @@ const Submited = (e)=>{
     })
 }
 
-    return (<div>
-    <h2>SignUp</h2>
-    <form  onSubmit = {Submited}>
+    return (
+    <div className='loginform'>
+    <h2 className='loginform__title'>SignUp</h2>
+    <form className='loginform__form' onSubmit = {Submited}>
         {error && <p>Email already in use</p>}
-    <input placeholder='User Name' required value={username} onChange = {(e)=> setusername(e.target.value)}/>
-    <input placeholder='Email' required value={email} onChange = {(e)=> setEmail(e.target.value)}/>
-    <input placeholder='Password' required type='password' value={password} onChange = {(e)=> setPass(e.target.value)}/>
-    <button>SignUp</button>
+    <input className ='loginform__input' placeholder='User Name' required value={username} onChange = {(e)=> setusername(e.target.value)}/>
+    <input className ='loginform__input' placeholder='Email' required value={email} onChange = {(e)=> setEmail(e.target.value)}/>
+    <input className ='loginform__input' placeholder='Password' required type='password' value={password} onChange = {(e)=> setPass(e.target.value)}/>
+    <button className ='loginform__btn'>SignUp</button>
     </form>
     </div>)
 }

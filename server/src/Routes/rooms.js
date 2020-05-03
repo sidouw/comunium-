@@ -38,6 +38,7 @@ router.patch('/rooms',auth,async(req,res)=>{
 })
 
 router.get('/rooms/:id',auth,async (req,res)=>{
+    console.log('1dt')
     try {
         const room =await Room.findOne({_id:req.params.id})
         if(! room){
@@ -50,28 +51,13 @@ router.get('/rooms/:id',auth,async (req,res)=>{
 
 })
 
-router.get('/rooms/:id',auth,async (req,res)=>{
-    try {
-        const room =await Room.findOne({users:{$all:[req.params.id,req.user._id]}})
-        if(! room){
-            const room = new Room({name:req.params.id+req.user._id})
-            room.users= [req.params.id,req.user._id]
-            await room.save()
-            res.send(room)
-        }
-        res.send(room)
-    } catch (error) {
-        res.status(400).send({error})
-    }
-})
 
 router.get('/rooms/u/:id',auth,async (req,res)=>{
     try {
         const room =await Room.findOne({users:{$all:[req.params.id,req.user._id]}})
-        // if(room){
-        //     await room.populate('messages').execPopulate()
-        //     console.log(room.messages)
-        // }
+        if(room){
+            await room.populate('users').execPopulate()
+        }
         if(! room){
             const room = new Room({name:req.params.id+req.user._id})
             room.users= [req.params.id,req.user._id]
