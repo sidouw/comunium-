@@ -1,12 +1,13 @@
 
 const socket = require('socket.io')
 const Message = require('../models/message')
-const Room = require('../models/room')
+const moment = require('moment')
 
 const addMessageToRoom = async (msg)=>{
-  // const room = Room.findById(room_id)
+ 
   try {
     const message = new Message(msg)
+    message.icat = moment().unix()
     await message.save()
   } catch (error) {
     console.log(error)
@@ -26,9 +27,10 @@ const handleChat = (server)=>{
 
      socket.on('sendMessage',(msg)=>{
       addMessageToRoom(msg).then(()=>{
-
+ 
       })
-       io.of('/chat').to(msg.room).emit('message',msg)
+       const message = {...msg,icat:moment().unix()}
+       io.of('/chat').to(message.room).emit('message',message)
 
      })
   })

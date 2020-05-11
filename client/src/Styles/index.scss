@@ -4,14 +4,14 @@
 @import './Componnents/LogInForm.scss';
 @import './Componnents/SideBar.scss';
 @import './Componnents/item-list.scss';
-@import './Componnents//Chat.scss';
-
+@import './Componnents/Chat.scss';
+@import './Componnents/Message.scss';
 body {
   margin: 0;
   font-family:  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: darken($bg-color, 11);;
+  background: darken($bg-color, 15);;
   font-size: $font-size;
   min-width: 360px;
   color: $white-color;

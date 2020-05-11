@@ -11,7 +11,7 @@ const messageSchema = new Schema({
         type:ObjectId,
         required:true
     },
-    room :{
+    Reciever :{
         type:ObjectId,
         required:true
     },
@@ -19,10 +19,11 @@ const messageSchema = new Schema({
         type:String,
         required:true
     },
+    icat:{
+        type:Number
+    },
     Media:[String]  //url of pictures and stuff 
-},
-{
-    timestamps:true
-});
+}
+);
 const Message = model("message", messageSchema);
 module.exports = Message;

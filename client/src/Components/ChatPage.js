@@ -1,9 +1,8 @@
 import React,{useEffect,useState,useContext} from 'react'
 import io from 'socket.io-client'
-import ScrollToBottom from 'react-scroll-to-bottom';
-import Message from './Mesaage'
 import context from '../context/context'
 import {getUsersRoom,getRoomMessages} from '../utils/RoomsDataHandler'
+import MessagesList from './MessagesList';
 
 
 const ChatPage = (props)=>{
@@ -32,24 +31,11 @@ const ChatPage = (props)=>{
         })
 
         socket.on('message',(msg)=>{
-            console.log(Messages)
-            setMessages(Messages => [ ...Messages, msg ])
             console.log(msg)
+            setMessages(Messages => [ ...Messages, msg ])
         })
 
     },[])
-
-    useEffect(()=>{
-        Messages.forEach((msg)=>{
-            users.forEach((user)=>{
-                if(user._id===msg.sender){
-                    return msg.sender=user.username
-                }
-            })
-            
-        })
-
-    },[Messages])
 
     const handleSumbmit = (e)=>{
         e.preventDefault()
@@ -63,13 +49,11 @@ const ChatPage = (props)=>{
         <p>Loading....</p>
         :
         <div className ="chatbox">
-        <ScrollToBottom  className = "chatbox--messages">
-            <ul>
-            {Messages.map((message,index)=>(
-                <Message key ={index} {...message}/>
-            ))}
-            </ul>
-        </ScrollToBottom>
+        <div className = 'chatbox__header'>
+        <span className = 'chatbox__header__title'>{users[0].username}</span>
+        </div>
+        <MessagesList Messages = {Messages} Users = {users}/>
+
         <div className = "chatbox--input">
         
         <form className = "chatbox--input--form" onSubmit = {handleSumbmit}>

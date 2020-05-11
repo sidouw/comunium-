@@ -38,7 +38,6 @@ router.patch('/rooms',auth,async(req,res)=>{
 })
 
 router.get('/rooms/:id',auth,async (req,res)=>{
-    console.log('1dt')
     try {
         const room =await Room.findOne({_id:req.params.id})
         if(! room){
@@ -62,7 +61,7 @@ router.get('/rooms/u/:id',auth,async (req,res)=>{
             const room = new Room({name:req.params.id+req.user._id})
             room.users= [req.params.id,req.user._id]
             await room.save()
-            res.send(room)
+            return res.send(room)
         }
         res.send(room)
     } catch (error) {
