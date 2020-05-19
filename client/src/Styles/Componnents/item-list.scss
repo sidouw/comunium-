@@ -15,9 +15,9 @@
         font-size: 1.2rem;
         margin-left: 1rem;
         min-width: 5rem;
-        max-width: 5rem;
+        // max-width: 5rem;
         text-align: center;
-        display: none;
+        // display: none;
     }
 
     & img{
@@ -28,9 +28,9 @@
 }
 
 .profile-link{
-    display: none;
+    // display: none;
     color: $s-color;
-    margin-left: .7rem;
+    margin-left: auto;
     margin-right: .7rem;
     padding: 0;
     & svg{
@@ -39,7 +39,7 @@
   }
   
   .chat-link{
-    display: none;
+    // display: none;
     color: $p-color;
     padding: 0;
     & svg{

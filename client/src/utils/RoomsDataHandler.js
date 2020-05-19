@@ -22,4 +22,22 @@ const getRoomMessages = async (id)=>{
 
     return data.json()
 }
-export {getUsersRoom,getRoomMessages}
+
+const getLastRoomMessage = async (id)=>{
+    try {
+        const data = await fetch(url+'/messages/u/'+id,{
+            headers:{
+                'Authorization':'Bearer '+cookie.get('token')
+             }
+        })
+        if (data) {
+            return data.json()
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+    
+}
+
+export {getUsersRoom,getRoomMessages,getLastRoomMessage}

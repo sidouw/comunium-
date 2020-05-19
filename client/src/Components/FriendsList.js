@@ -1,13 +1,14 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useContext} from 'react'
 import {Link} from 'react-router-dom'
 import {getFriends} from '../utils/UsersDataHandler'
-
+import context from '../context/context'
 
 const FriendsList = (props)=>{
 const [friends,setfriends] = useState([{}])
 const [loading,setloading] = useState(true)
+const {user} = useContext(context)
 useEffect(()=>{
-    getFriends(props.id).then((data)=>{
+    getFriends(user._id).then((data)=>{
         setfriends(data)
         setloading(false)
     })
@@ -17,7 +18,7 @@ return(
     loading?
     <p>Lodaing ....</p>
     :
-    <div className ='list'>
+    <div >
     <ul className="item-list">
     {
         friends.map((friend)=>(

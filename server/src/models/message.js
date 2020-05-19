@@ -11,9 +11,12 @@ const messageSchema = new Schema({
         type:ObjectId,
         required:true
     },
-    Reciever :{
+    room :{
         type:ObjectId,
         required:true
+    },
+    receiver :{
+        type:ObjectId
     },
     body :{
         type:String,

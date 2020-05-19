@@ -16,8 +16,9 @@ const FriendRequest = ({Request})=>{
 }   
 
 return (
-    <div>
-    <span>{Request.username}</span>
+    <div className="nav-link">
+    <img src='/img/Happiness.jpg'  alt ='Profile pic '/>
+    <span className="item-list--item-text">{Request.username}</span>
     <button onClick ={accept}>Accept</button>
     <button onClick = {decline}>decline</button>
     </div>

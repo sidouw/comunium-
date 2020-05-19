@@ -6,8 +6,12 @@
 @import './Componnents/item-list.scss';
 @import './Componnents/Chat.scss';
 @import './Componnents/Message.scss';
+@import './Componnents/LastChat.scss';
+@import './Componnents/FriendsPage.scss';
+
 body {
   margin: 0;
+  padding: 0;
   font-family:  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

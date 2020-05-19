@@ -26,8 +26,9 @@
     width: 100%;
   }
 
-.nav-item:nth-child(2){
+.nav-item:nth-child(3){
     border-bottom: solid 1px darken($bg-color, 11);
+    margin-top: 1rem;
 }
   .nav-item:last-child {
     border-top: solid 1px darken($bg-color, 11);;
@@ -42,6 +43,13 @@
     text-decoration: none;
     // filter: grayscale(100%) opacity(0.7);
     transition:500ms;
+
+    &__pp{
+      width: 60px;
+      height: 60px;
+      border-radius: 50px;
+      margin-left: .2rem;
+    }
   }
 
   .nav-logo{
@@ -118,7 +126,7 @@
 
 .navbar {
   top: 0;
-  width: 5rem;
+  width: 4.2rem;
   height: 100vh;
 }
 

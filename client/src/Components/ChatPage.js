@@ -1,7 +1,7 @@
 import React,{useEffect,useState,useContext} from 'react'
 import io from 'socket.io-client'
 import context from '../context/context'
-import {getUsersRoom,getRoomMessages} from '../utils/RoomsDataHandler'
+import {getUsersRoom,getRoomMessages,getLastRoomMessage} from '../utils/RoomsDataHandler'
 import MessagesList from './MessagesList';
 
 
@@ -17,7 +17,6 @@ const ChatPage = (props)=>{
     useEffect(()=>{
 
         const id = props.match.params.id
-
         getUsersRoom(id).then((room)=>{
             
             setroom(room)
@@ -31,7 +30,6 @@ const ChatPage = (props)=>{
         })
 
         socket.on('message',(msg)=>{
-            console.log(msg)
             setMessages(Messages => [ ...Messages, msg ])
         })
 
@@ -40,7 +38,7 @@ const ChatPage = (props)=>{
     const handleSumbmit = (e)=>{
         e.preventDefault()
         const msg = e.target.elements[0].value
-        socket.emit('sendMessage',{sender:user._id,body:msg,room:room._id})
+        socket.emit('sendMessage',{sender:user._id,body:msg,room:room._id,receiver:props.match.params.id})
         e.target.elements[0].value = ''
     }
 

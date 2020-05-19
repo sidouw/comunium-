@@ -5,7 +5,8 @@ import {getUser} from '../utils/UsersDataHandler'
 import {getLastRoomMessage} from '../utils/RoomsDataHandler'
 
 
-const ChatListPage = ()=>{
+
+const ChatList = ()=>{
     const [loading,setLoading] = useState(true)
     const [Messages,setMessages] = useState([]) 
     const {user} = useContext(context)
@@ -32,12 +33,13 @@ const ChatListPage = ()=>{
         })
 
     },[])
+
     return( 
         loading?
         <p>loading</p>
         :
         <div>
-        <ul>
+        <ul className="Chatitem-list">
         {
             Messages.map((message,index)=>(
                     <LastMessage key= {index} message ={message} />
@@ -48,4 +50,4 @@ const ChatListPage = ()=>{
     )
 }
 
-export default ChatListPage
+export default ChatList

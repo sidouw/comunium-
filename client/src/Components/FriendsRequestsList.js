@@ -18,11 +18,10 @@ return(
     <p>Lodaing ....</p>
     :
     <div>
-    <h3>Friend Requests</h3>
-    <ul>
+    <ul className="item-list">
     {
         Requests.map((Request)=>(
-            <li key = {Request._id}>
+            <li className = "item-list--item" key = {Request._id}>
             <FriendRequest Request={Request}/>
             </li>
         ))
