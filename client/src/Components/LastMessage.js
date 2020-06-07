@@ -1,10 +1,14 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 
-// message.message.icat
- const LastMessage = ({message})=>
-(  
-    <Link className = 'last-chat-elem__link' to = {'/chat/'+message.user._id}>  
+
+ const LastMessage = ({message,setChat})=>{
+    
+    const Clicked = ()=>{
+        setChat(message.user._id)
+    }
+
+    return (  
+    <a className = 'last-chat-elem__link' onClick = {Clicked}>  
     <li className = 'last-chat-elem' >
         <div className = 'last-chat-elem__container'>
         <img src='/img/Happiness.jpg' className ='last-chat-elem__image'  alt ='Profile pic '/>
@@ -18,7 +22,7 @@ import {Link} from 'react-router-dom'
         </div>
         </div>
     </li>
-    </Link>
-    )
+    </a>
+    )}
 
     export default LastMessage

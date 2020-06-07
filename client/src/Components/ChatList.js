@@ -6,7 +6,7 @@ import {getLastRoomMessage} from '../utils/RoomsDataHandler'
 
 
 
-const ChatList = ()=>{
+const ChatList = ({setChat})=>{
     const [loading,setLoading] = useState(true)
     const [Messages,setMessages] = useState([]) 
     const {user} = useContext(context)
@@ -42,7 +42,7 @@ const ChatList = ()=>{
         <ul className="Chatitem-list">
         {
             Messages.map((message,index)=>(
-                    <LastMessage key= {index} message ={message} />
+                    <LastMessage key= {index} message ={message} setChat={setChat} />
     ))
         }
         </ul>

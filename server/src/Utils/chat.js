@@ -24,6 +24,9 @@ const handleChat = (server)=>{
     socket.on('join',(room)=>{
       socket.join(room)
     })
+    socket.on('leave',(room)=>{
+      socket.leave(room)
+    })
 
      socket.on('sendMessage',(msg)=>{
       addMessageToRoom(msg).then(()=>{
@@ -31,7 +34,7 @@ const handleChat = (server)=>{
       })
        const message = {...msg,icat:moment().unix()}
        io.of('/chat').to(message.room).emit('message',message)
-
+       console.log(msg)
      })
   })
 

@@ -5,7 +5,6 @@ import LoginPage from '../Components/LoginPage'
 import ProfilePage from '../Components/ProfilePage'
 import DashboardPage from '../Components/DashboardPage'
 import ChatPage from '../Components/ChatPage'
-import ChatListPage from '../Components/ChatListPage'
 import FriendsPage from '../Components/FriendsPage'
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
@@ -25,8 +24,7 @@ const App =() =>{
   <Switch>
   <PublicRoute path ='/' component ={LoginPage} exact={true}/>
   <PrivateRoute path ='/dashboard' component ={DashboardPage}/>
-  <PrivateRoute path ='/Chat/:id' component ={ChatPage}/> 
-  <PrivateRoute path ='/Chat' component ={ChatListPage}/> 
+  <PrivateRoute path ='/Chat' component ={ChatPage}/> 
   <PrivateRoute path ='/friends' component ={FriendsPage}/> 
   <PrivateRoute path = '/profile/:id' component= {ProfilePage}/>
   <Route  component= {()=><p>fuuukkk</p>}/>

@@ -28,9 +28,9 @@
             padding: .4rem 0 0 0;
             // padding: .2rem;
             height: 2rem;
-            position: relative;
-            left: -999px;
-            transition:400ms;
+            // position: relative;
+            // left: -999px;
+            // transition:400ms;
             // background: mediumslateblue;
         }
     }
@@ -58,8 +58,10 @@
         margin-right: 1rem;
     }
     &__link{
+        cursor: pointer;
         text-decoration: none;
-        color: $white-color;
+        background: magenta;
+        color: magenta;
     }
 }
 
