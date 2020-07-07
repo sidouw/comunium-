@@ -10,6 +10,7 @@ const [user,setUsernaem] = useState('')
 const [error,seterror] = useState(false)
 const [pass,setPass] = useState('')
 const {setUser} = useContext(context)
+
 const Submited = (e)=>{
     e.preventDefault()
 
@@ -17,13 +18,13 @@ const Submited = (e)=>{
     .then((data)=>{
         if (data.error) {
             seterror(true)
-            return console.log('unable to log in ')
+        }else{
+            seterror(false)
+            setUser(data.user)
+            cookies.set('token',data.token)
+            push('/dashboard')
         }
-        seterror(false)
-        setUser(data.user)
-        cookies.set('token',data.token)
-        push('/dashboard')
-        
+ 
     })
 
     

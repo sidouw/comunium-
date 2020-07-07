@@ -2,7 +2,6 @@ import React,{useState,useEffect,useContext} from 'react'
 import context from '../context/context'
 import {Link} from 'react-router-dom'
 import {getUser} from '../utils/UsersDataHandler'
-import FriendsList from './FriendsList'
 import FriendsRequestsList from './FriendsRequestsList'
 import {AddFriend,DeleteFriend} from '../utils/UsersDataHandler'
 
@@ -11,8 +10,9 @@ const ProfilePage = (props)=>{
 
     const [userProfile,setProfile] = useState({})
     const [isFriend,setisFriend] = useState(false)
+    const [loading,setloading] = useState(true)
     const [self,setself] = useState(false)
-    const {loaing,setloading,user} = useContext(context)
+    const {user} = useContext(context)
     
     useEffect(()=>{
 
@@ -54,7 +54,7 @@ const ProfilePage = (props)=>{
 
     }
     return (
-        loaing ?
+        loading ?
         <p>Loading</p>
         :
         userProfile ?

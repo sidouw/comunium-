@@ -25,6 +25,10 @@ const messageSchema = new Schema({
     icat:{
         type:Number
     },
+    seen:{
+        type:Boolean,
+        default : false
+    },
     Media:[String]  //url of pictures and stuff 
 }
 );

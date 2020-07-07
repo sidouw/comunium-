@@ -10,5 +10,13 @@ const getLastRoomMessage = async (id)=>{
 
     return data.json()
 }
+const setMessageSeen = async (id)=>{
+    const data = await fetch(url+'/messages/seen/'+id,{
+        headers:{
+            'Authorization':'Bearer '+cookie.get('token')
+         }
+    })
 
-export {getUsersRoom}
+    return data.json()
+}
+export {setMessageSeen}

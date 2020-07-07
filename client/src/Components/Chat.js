@@ -1,12 +1,13 @@
 import React,{useEffect,useState,useContext} from 'react'
+import  moment  from 'moment';
 import context from '../context/context'
 import {getRoomMessages} from '../utils/RoomsDataHandler'
 import MessagesList from './MessagesList';
 
-const Chat = ({room,socket,message})=>{
+const Chat = ({room,sendMessage,message})=>{
 
     
-    const [users,setUsers] = useState([{}]) 
+    const [partner,setPartner] = useState([{}]) 
     const [loading,setloading] = useState(true) 
     const [Messages,setMessages] = useState([]) 
     const {user} = useContext(context)
@@ -14,10 +15,18 @@ const Chat = ({room,socket,message})=>{
 
 
     useEffect(()=>{
-        setUsers(room.users)
         getRoomMessages(room._id).then((roomMessages)=>{
             setMessages(roomMessages)
-            setloading(false)
+            if(!room.error){
+                room.users.forEach(ruser => {
+                    if(ruser._id !== user._id ){
+                        setPartner(ruser)
+                    }
+                })
+                setloading(false)
+            }
+
+            
         })
 
     },[room])
@@ -30,19 +39,25 @@ const Chat = ({room,socket,message})=>{
     const handleSumbmit = (e)=>{
         e.preventDefault()
         const msg = e.target.elements[0].value
-        socket.emit('sendMessage',{sender:user._id,body:msg,room:room._id,receiver:users[0]._id})
-        e.target.elements[0].value = ''
+        if(msg.trim()!==''){
+            const message = {sender:user._id,body:msg,room:room._id,receiver:partner._id,icat: moment().unix()}
+            sendMessage(message)
+            e.target.elements[0].value = ''
+        }
     }
 
     return(
         loading ?
         <p>Loading....</p>
         :
+        room.error?
+         <p>Empty</p>
+        :
         <div className ="chatbox">
         <div className = 'chatbox__header'>
-        <span className = 'chatbox__header__title'>{users[0].username}</span>
+        <span className = 'chatbox__header__title'>{partner.username}</span>
         </div>
-        <MessagesList Messages = {Messages} Users = {users}/>
+        <MessagesList Messages = {Messages} Users = {[partner,user]}/>
 
         <div className = "chatbox--input">
         

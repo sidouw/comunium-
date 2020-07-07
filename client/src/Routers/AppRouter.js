@@ -14,17 +14,18 @@ import PublicRoute from './PublicRoute'
 const App =() =>{
   
   const [loged,setloged] = useState(false)
-  const [loading,setloading] = useState(true)
   const [user,setUser] = useState({contacts:[],username:'',email:'',state:'',_id:''})
+// <PrivateRoute path ='/Chat' component ={ChatPage}/> 
   return(
     
-  <context.Provider value = {{loged,setloged,user,setUser,loading,setloading}}>
+  <context.Provider value = {{loged,setloged,user,setUser}}>
   <BrowserRouter>
   <div>
   <Switch>
   <PublicRoute path ='/' component ={LoginPage} exact={true}/>
   <PrivateRoute path ='/dashboard' component ={DashboardPage}/>
-  <PrivateRoute path ='/Chat' component ={ChatPage}/> 
+  <PrivateRoute path ='/Chat/:id' component ={ChatPage}/> 
+  
   <PrivateRoute path ='/friends' component ={FriendsPage}/> 
   <PrivateRoute path = '/profile/:id' component= {ProfilePage}/>
   <Route  component= {()=><p>fuuukkk</p>}/>

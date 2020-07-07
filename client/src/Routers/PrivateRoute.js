@@ -1,7 +1,6 @@
-import React,{useContext,useEffect} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import {Route,Redirect} from 'react-router-dom'
 import cookie from 'js-cookie'
-import Header from '../Components/Header'
 import context from '../context/context'
 import {authanticate} from '../utils/auth'
 import SideBar from '../Components/SideBar'
@@ -9,8 +8,9 @@ import SideBar from '../Components/SideBar'
 
 
 const PrivateRoute= ({component:Component,...rest})=>{
+    const [loading,setloading] = useState(true)
+    const {loged,setloged,setUser} = useContext(context)
 
-    const {loged,loading,setloading,setloged,setUser} = useContext(context)
     useEffect(()=>{
         authanticate(cookie.get('token')).then((data)=>{
             if (data.error) {

@@ -25,9 +25,10 @@ const userSchema = new Schema(
             type:String,
             required:true
         },
-        state:{
-            type:String
-        },
+        state: [{
+            type:String,
+            required:true
+        }],
         tokens : [{
             type:String,
             required:true
@@ -59,6 +60,7 @@ userSchema.methods.toJSON = function () {
     const userObject = this.toObject()
     delete userObject.password
     delete userObject.tokens
+    // delete userObject.contacts
     delete userObject.friendrequestes
     return userObject
 }

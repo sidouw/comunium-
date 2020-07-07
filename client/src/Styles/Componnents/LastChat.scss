@@ -2,9 +2,11 @@
     margin: 1rem 0 1rem -2.3rem;
     list-style: none;
     text-decoration: none;
+    
 }
 
 .last-chat-elem{
+    
     margin-bottom: .4rem;
     // border-bottom: 1px solid palegoldenrod;
     // padding: .3rem 0;
@@ -60,8 +62,8 @@
     &__link{
         cursor: pointer;
         text-decoration: none;
-        background: magenta;
-        color: magenta;
+        // background: magenta;
+        // color: magenta;
     }
 }
 

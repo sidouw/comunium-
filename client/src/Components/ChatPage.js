@@ -1,56 +1,86 @@
-import React,{useState,useEffect,useRef} from 'react'
+import React,{useState,useEffect,useRef,useContext} from 'react'
 import io from 'socket.io-client'
 import {getUsersRoom} from '../utils/RoomsDataHandler'
+import context from "../context/context";
 import Chat from './Chat'
 import ChatList from './ChatList'
+import ChatListFilter from './ChatListFilter'
 
-const ChatPage = ()=>{
+const ChatPage = (props)=>{
 
-        const socket = io.connect('127.0.1.1:5001/chat')
-        const [chatId,setChatId] = useState('5eae052a7aebb33270bfb599')
+        const socket = useRef()
         const [room,setroom] = useState() 
         const [msg,setmsg] = useState('') 
+        const [LastMsg,setLastMsg] = useState('')
+        const [discUser,setdiscUser] = useState('') 
+        const [conUser,setConUser] = useState('')
+        const [chatFilter,setchatFilter] = useState('')
         const [loading,setloading] = useState(true)
+        const [loadingChat,setloadingChat] = useState(true)
+        const {user} = useContext(context)
+        const chatIdRef = useRef('') 
 
-        const emitter =socket.on('message',setmsg)
-        
-        const emRef = useRef(emitter)
-        // 
-         
 
  
     useEffect(()=>{
-        getUsersRoom(chatId).then((room)=>{      
-            setroom(room)
-            socket.emit('join',room._id)
+        socket.current = io.connect('127.0.1.1:5001/chat')
+        socket.current.emit('join',user._id)
+        socket.current.on('message',msg=>{   
+                      
+            if(chatIdRef.current === msg.sender){
+                msg.seen=true
+                setLastMsg(msg) 
+                setmsg(msg)
+                
+            }else{
+                setLastMsg(msg)  
+            }
             
-            setloading(false)
         })
-        
+
+        socket.current.on('userdisconnected',duser=>{
+            setdiscUser(duser)
+            console.log('the ooozz')
+        })
+
+        socket.current.on('userconnected',cuser=>{
+            setConUser(cuser)
+        })
+
+        setloading(false)
+        return ()=>{
+            socket.current.emit('leave',user._id)
+        }
     },[])
 
+    const sendMessage = message=>{
+        setLastMsg(message)
+        setmsg(message)
+        socket.current.emit('sendMessage',message)
+    }
         const setChat = (id)=>{
-            if (id !==chatId ) {
-                socket.emit('leave',room._id)
-                socket.off('message',setmsg)
-                setChatId(id)
+            if (id !==chatIdRef.current ) {
+                chatIdRef.current = id
+                window.history.replaceState('', '', id)
                 getUsersRoom(id).then((room)=>{      
                     setroom(room)
-                    socket.emit('join',room._id)
-                    emRef.current.off()
-                    emRef.current=socket.on('message',setmsg)
+                    setloadingChat(false)
                 })
             }
-
         }
+
     return (
         loading ? 
         <p>Loading ...........</p>
         :
 
         <div className ="chat-page-container">
-        <ChatList setChat= {setChat}/>
-        <Chat room = {room} socket= {socket} message= {msg}/>
+        <div className ="Chat-List-container">
+        <ChatListFilter setchatFilter = {setchatFilter} chatFilter={chatFilter}/>
+        <ChatList setChat= {setChat} LastMsg={LastMsg} chatFilter={chatFilter} discUser={discUser} conUser={conUser} />
+        </div>
+        
+        {!loadingChat && <Chat room = {room} sendMessage= {sendMessage} message= {msg}/>}
         </div>
 
         

@@ -7,7 +7,6 @@ const auth = require('../Utils/auth')
 
 
 router.post('/rooms',auth,async (req,res)=>{
-    console.log(req.body)
     try {
         const room = new Room(req.body)
         room.users.push(req.user._id)

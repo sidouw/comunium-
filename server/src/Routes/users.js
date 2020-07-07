@@ -67,7 +67,6 @@ router.get('/users/f',auth,async (req,res)=>{
         await req.user.populate('friendrequestes').execPopulate()
         res.send(req.user.friendrequestes)
     } catch (error) {
-        console.log(error) 
         res.status(400).send({error})
     }
 
@@ -76,16 +75,23 @@ router.get('/users/f',auth,async (req,res)=>{
 //send Friend Requst
 router.post('/users/f',auth,async (req,res)=>{
 
-    try {   
-        const user =await User.findById(req.body.id)
-        if(user.friendrequestes.includes(req.user._id)){
-            return res.send({error:'request already sent'})
+    try {
+        let user = await User.findOne({username:req.body.id})
+        if (user) {
+            if(user.friendrequestes.includes(req.user._id)){
+                return res.send({error:'request already sent'})
+            }else if(user.contacts.includes(req.user._id)){
+                return res.send({error:'already Friends'})
+            }
+            user.friendrequestes.push(req.user._id)
+            await user.save()
+            res.send({ok:'sent'})
+        }else{
+            res.send({error:'User Not Found'})
         }
-        user.friendrequestes.push(req.user._id)
-        await user.save()
-        res.send({ok:'sent'})
+        
+
     } catch (error) {
-        console.log(error) 
         res.status(400).send({error})
     }
 
