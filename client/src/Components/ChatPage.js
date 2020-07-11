@@ -12,8 +12,6 @@ const ChatPage = (props)=>{
         const [room,setroom] = useState() 
         const [msg,setmsg] = useState('') 
         const [LastMsg,setLastMsg] = useState('')
-        const [discUser,setdiscUser] = useState('') 
-        const [conUser,setConUser] = useState('')
         const [chatFilter,setchatFilter] = useState('')
         const [loading,setloading] = useState(true)
         const [loadingChat,setloadingChat] = useState(true)
@@ -24,7 +22,7 @@ const ChatPage = (props)=>{
  
     useEffect(()=>{
         socket.current = io.connect('127.0.1.1:5001/chat')
-        socket.current.emit('join',user._id)
+        socket.current.emit('join',user._id,user.contacts)
         socket.current.on('message',msg=>{   
                       
             if(chatIdRef.current === msg.sender){
@@ -38,15 +36,13 @@ const ChatPage = (props)=>{
             
         })
 
-        socket.current.on('userdisconnected',duser=>{
-            setdiscUser(duser)
-            console.log('the ooozz')
+        socket.current.on('ping',(pong)=>{
+            if (pong){
+                pong()
+            }
+            
         })
-
-        socket.current.on('userconnected',cuser=>{
-            setConUser(cuser)
-        })
-
+        
         setloading(false)
         return ()=>{
             socket.current.emit('leave',user._id)
@@ -77,7 +73,7 @@ const ChatPage = (props)=>{
         <div className ="chat-page-container">
         <div className ="Chat-List-container">
         <ChatListFilter setchatFilter = {setchatFilter} chatFilter={chatFilter}/>
-        <ChatList setChat= {setChat} LastMsg={LastMsg} chatFilter={chatFilter} discUser={discUser} conUser={conUser} />
+        <ChatList setChat= {setChat} LastMsg={LastMsg} chatFilter={chatFilter} socket={socket.current} />
         </div>
         
         {!loadingChat && <Chat room = {room} sendMessage= {sendMessage} message= {msg}/>}

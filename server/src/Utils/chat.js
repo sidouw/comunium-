@@ -15,43 +15,67 @@ const addMessageToRoom = async (msg)=>{
 
 }
 
-const UpdateState = async (id,socketId)=>{
+const UpdateState = (id,socketId)=>{
 
-  try {
-    const user = await User.findById(id)
-    if(user){
-      
-      user.state.push(socketId)
-      await user.save()
-      user.contacts.forEach(contact => {   
-        io.of('/chat').to(contact).emit('userconnected',user._id)
+  fs.access('usersStatus', fs.F_OK, (err) => {
+    if (err) {     
+      fs.writeFile('usersStatus',JSON.stringify({id:[socketId]}), function (err) {
+        if (err) throw err;
+      });
+      console.error(err)
+      return
+    }
+    fs.readFile('usersStatus', function(err, data) {
+      if(data){  
+      const UserStats =JSON.parse(data.toString())
+      if(UserStats[id]){
+        UserStats[id] = [...UserStats[id],socketId]      
+      }else{
+        UserStats[id] = [socketId]
+      }
+      fs.writeFile('usersStatus',JSON.stringify(UserStats),(err)=>{
       })
     }
-  } catch (error) {
+
+    })
     
-  }
+  })
 
 }
 
+
 const handledisconnect = async (socketId,io) => {
-  try {
-    const user = await User.findOne({state:socketId})
-    if (user) {
-      user.state = user.state.filter(sId=>sId !== socketId)
-      console.log(user.state.length)
-      if (user.state.length === 0) {
-        user.contacts.forEach(contact => {  
-           
-          io.of('/chat').to(contact).emit('userdisconnected',user._id)
-        })
-      }
-      await user.save()
+  
+  fs.readFile('usersStatus',async function(err, data) {
+    
+    if(data){
+      const UserStats =JSON.parse(data.toString())
+      
+    const UsersId = Object.keys(UserStats)
+    for (const UserId of UsersId) {
+      UserStats[UserId]=UserStats[UserId].filter(socket=>{
+        return socket!=socketId
+      })
+      
+      if (UserStats[UserId].length === 0 && UserId!=='id') {
+        try {    
+          const user = await User.findById(UserId)
+          if (user) {
+              user.contacts.forEach(contact => {  
+                io.of('/chat').to(contact).emit('userdisconnected',user._id)  
+              })
+          }
+        } catch (error) {
+   
+        }
+       }
     }
 
-  } catch (error) {
-    
-  }
 
+    fs.writeFile('usersStatus',JSON.stringify(UserStats),(err)=>{
+    })
+  }
+  })
 
 }
 
@@ -59,13 +83,57 @@ const handledisconnect = async (socketId,io) => {
 const handleChat = (server)=>{
 
   const io = socket(server)
-  
+  const SocketTimers ={}
+  const IntervalTimers ={}
   io.of('/chat').on('connection',(socket)=>{
-    socket.on('join',(room)=>{
+
+    socket.on('join',(room,friends)=>{
       socket.join(room)
-      UpdateState(room,socket.id)
+      UpdateState(room,socket.id,friends)
+
+      friends.forEach(contact => {   
+        io.of('/chat').to(contact).emit('userconnected',room)
+      })
+
+      IntervalTimers[socket.id] =  setInterval(() => {
+        SocketTimers[socket.id] = setTimeout(() => {
+          handledisconnect(socket.id,io)
+          clearInterval(IntervalTimers[socket.id])
+        }, 5000)
+       socket.emit('ping',()=>{
+         clearTimeout(SocketTimers[socket.id])
+       })
+      }, 5000)
+      
     })
 
+    socket.on('online',(friends,callback)=>{
+
+      fs.access('usersStatus', fs.F_OK, (err) => {
+        if (err) {    
+          callback([])
+          console.error(err)
+          return
+        }else{
+          fs.readFile('usersStatus', function(err, data) {
+            if(data){
+            const UserStats =JSON.parse(data.toString())
+            const online = []
+            friends.forEach(friend=>{
+              if(UserStats[friend] && UserStats[friend].length>0){
+                online.push(friend)
+              }             
+            })
+            callback(online)
+          }else{
+            callback([])
+          }
+  
+          })
+        }
+      })
+
+    })
     socket.on('leave',(room)=>{
       socket.leave(room)
     })
@@ -79,9 +147,14 @@ const handleChat = (server)=>{
      })
 
 
+
      socket.on('disconnect',()=>{
+      clearInterval(IntervalTimers[socket.id])
+      clearTimeout(SocketTimers[socket.id])
+       setTimeout(() => {
+        handledisconnect(socket.id,io)
+       }, 1000);
       
-      handledisconnect(socket.id,io)
   })
 
   })

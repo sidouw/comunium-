@@ -25,10 +25,6 @@ const userSchema = new Schema(
             type:String,
             required:true
         },
-        state: [{
-            type:String,
-            required:true
-        }],
         tokens : [{
             type:String,
             required:true

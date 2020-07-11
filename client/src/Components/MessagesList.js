@@ -1,14 +1,26 @@
-import React from 'react'
+import React, {useRef,useLayoutEffect } from 'react'
 import Message from './Mesaage'
-import ScrollToBottom from 'react-scroll-to-bottom';
+
 
 
 
 
 const MessagesList = ({Messages,Users})=>{
 
-    const MapDataToMessage = (msg)=>{
+    const messagesEndRef = useRef(null)
+    const chatboxref  = useRef()
 
+
+    useLayoutEffect(()=>{
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth",block: "end", inline: "nearest"})
+    },[])
+    useLayoutEffect(()=>{
+        const shouldScrollToBottom = chatboxref.current.scrollTop + chatboxref.current.clientHeight + 200 >= chatboxref.current.scrollHeight
+        if (shouldScrollToBottom) {
+            messagesEndRef.current.scrollIntoView({ block: "end", inline: "nearest"})
+        }
+    },[Messages])
+    const MapDataToMessage = (msg)=>{
         Users.forEach(user => {
             if(user._id===msg.sender){
                 if (Messages[Messages.length-1] === msg.sender) {
@@ -24,7 +36,7 @@ const MessagesList = ({Messages,Users})=>{
     }
 
     return (        
-    <ScrollToBottom  className = "chatbox--messages">
+    <div ref={chatboxref}  className = "chatbox--messages">
         <ul className = 'MessagesList'>
         {Messages.map((message,index)=>{
             MapDataToMessage(message)
@@ -33,7 +45,8 @@ const MessagesList = ({Messages,Users})=>{
             )
         })}
         </ul>
-    </ScrollToBottom>
+        <div ref={messagesEndRef} />
+    </div>
     )
 }
 

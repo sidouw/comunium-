@@ -1,5 +1,5 @@
 import React from 'react'
-
+import moment from 'moment'
 
 
  const Message = ({sender,icat,body,profilepic,includeExtra})=>
@@ -8,7 +8,7 @@ import React from 'react'
 
     {includeExtra && <div className = 'Message__info'>
     <span className = 'Message__sender'>{sender}</span>
-    <span className = 'Message__time'>{icat}</span> 
+    <span className = 'Message__time'>{moment.unix(icat).format("LT")}</span> 
     </div>}
 
     { includeExtra && (true?

@@ -8,7 +8,7 @@ import {setMessageSeen} from '../utils/MessagesDataHandler'
      
     const {user} =useContext(context)
     
-    const [online,setOnline] =  useState(message.user.state.length !==0)
+    const [online,setOnline] =  useState(false)
     const [seen,setSeen] =  useState(message.message.seen || message.message.sender === user._id )
     
     const Clicked = ()=>{
@@ -19,13 +19,12 @@ import {setMessageSeen} from '../utils/MessagesDataHandler'
             }).catch(()=>{
     
             })
-            console.log(message.message.sender === user._id)
             setSeen(true)
         }
 
     }
     React.useEffect(()=>{
-        setOnline(message.user.state.length !==0)
+        setOnline(message.user.state)
     })
 
     return (  

@@ -1,5 +1,4 @@
 import React,{useContext,useEffect,useState} from 'react'
-import { useAsync } from 'react-async-hook'
 import LastMessage from './LastMessage'
 import context from '../context/context'
 import {getUser} from '../utils/UsersDataHandler'
@@ -7,10 +6,12 @@ import {getLastRoomMessage} from '../utils/RoomsDataHandler'
 import friendsSelector from '../Selectors/FriendsSelector'
 
 
-const ChatList = ({setChat,LastMsg,chatFilter,discUser,conUser})=>{
+const ChatList = ({setChat,LastMsg,chatFilter,socket})=>{
     const [loading,setLoading] = useState(true)
     const [chatListData,setChatListData] = useState([])
     const [chatList,setChatList] = useState([])
+    const [discUser,setdiscUser] = useState('') 
+    const [conUser,setConUser] = useState('')
     const {user} = useContext(context)
     
     const getEntries =async ()=>{
@@ -31,35 +32,43 @@ const ChatList = ({setChat,LastMsg,chatFilter,discUser,conUser})=>{
                 setChatListData([...data])
                 setChatList([ ...data])   
             }
+            socket.on('userdisconnected',(duser)=>{
+                setdiscUser(duser)
+            })
+    
+            socket.on('userconnected',cuser=>{
+                setConUser(cuser)
+                
+            })
+            socket.emit('online',user.contacts,(online)=>{
+                online.forEach(onlinefriend => {
+                    setConUser(onlinefriend)
+                })
+            })
             setLoading(false)
         })
     },[])
 
     useEffect(()=>{
-        
         chatListData.forEach(chat=>{
             if (chat.user._id===discUser) {
-                chat.user.state = []
+                chat.user.state = false
+                setdiscUser('')
             }
         })
         setChatListData([...chatListData])
         setChatList([...chatListData])
-        console.log(chatListData)
-        
-        
     },[discUser])
 
     useEffect(()=>{
-        
         chatListData.forEach(chat=>{
             if (chat.user._id===conUser) {
-                chat.user.state = [1]
+                chat.user.state = true
+                setConUser('')
             }
         })
         setChatListData([...chatListData])
         setChatList([...chatListData])
-        console.log(chatListData)
-        
     },[conUser])
 
     useEffect(()=>{
