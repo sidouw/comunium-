@@ -6,32 +6,34 @@
 }
 
 .Friends-tab{
-    background: darken($bg-color, 10.5);
+    background: $bg-color;
     border-radius: 10px;
+    overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
+    
     &__list{
         margin: 0;
-        position: sticky;
-        top: 0;
-        background: darken($bg-color, 10.5);
-        border-bottom: solid 1px darken($bg-color, 15); ;
+        padding: 0 0 .5rem 0 ;
+        background: $bg-color;
+        border-bottom: solid 1px darken($bg-color, 5); ;
         height: 2.5rem;
+        width: 100%;
         list-style: none;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
         
         &__tab{
-            // background: firebrick;
+          cursor: pointer;
             padding: .2rem;
             &--selected {     
                 background: $white-color ;
-                border-color: #aaa;
-                color: darken($bg-color, 10.5);
+                border-color: $s-color;
+                font-weight: 700;
+                color: $p-color;
                 font-weight: 600;
                 border-radius: 10px;
-                // box-shadow: 1px 1px 10px 1px $white-color;
               }
         }
     }
@@ -39,8 +41,6 @@
     &__panel{
         margin: auto;
         max-width: 80%;
-        // height: 100%;
-        // background: magenta;
     }
     
 
@@ -58,3 +58,15 @@
       }
 }
 
+@media(max-width:650px){
+  .Friends-tab{
+    background: $bg-color;
+    &__list{  
+      padding: 0;
+      &__tab{
+          padding: .2rem;
+          font-size: .8rem;
+      }
+    }
+  }
+}

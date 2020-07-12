@@ -1,7 +1,9 @@
 .chat-page-container{
   display: flex;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
-
 
 .chatbox{
     // background-color:firebrick;
@@ -9,20 +11,21 @@
     flex-direction: column;
     height: 100vh;
     width: 100%;
+    overflow: hidden;
+    
     &__header {
-      background: darken($bg-color, 11);
-      box-shadow: -1px 9px 24px -16px rgba(0, 0, 0, 0.6);
+      background: $bg-color;
+      box-shadow: 0px 2px 20px -16px rgba(0, 0, 0, 0.6);
       padding: 1rem;
-      text-align: center;
+      height: 3rem;
+      max-height: 2.6rem;
       &__title{
         font-size: 2rem;
       }
     }
     &--messages{
-
         flex-grow: 1;
         overflow: auto;
-
         &::-webkit-scrollbar {
             width: 0.25rem;
           }
@@ -37,29 +40,25 @@
     }
     &--input{
         display: flex;
-        border-radius: 20px;
         background-color: $bg-color;
-        margin: .5rem ;
         padding: .5rem 1rem;
         box-shadow: 2px 5px 43px -9px rgba(0,0,0,0.46);
-
         &--form{
             flex-grow: 1;
             display: flex;
 
             &--input{
                 flex-grow: 1;
+                background-color: transparent;
                 border: none;
-                border-radius: 10px;
-                padding: .5rem 1rem;
-                margin-right: .3rem;
+                color: $white-color;
+                padding: .5rem 0rem;
             }
             &--btn{
                 background-color: transparent;
                 border: none;
                 width: 30px;
                 height: 30px;
-                border-radius: 50%;
                 & svg{
                     color: $s-color;
                 }
@@ -71,16 +70,3 @@
 }
 
 
-.css-y1c0xs, [data-css-y1c0xs] {
-    &::-webkit-scrollbar {
-        width: 0.25rem;
-      }
-      
-      &::-webkit-scrollbar-track {
-        background: none;
-      }
-      
-      &::-webkit-scrollbar-thumb {
-        background: $s-color;
-      }
-}

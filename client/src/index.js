@@ -12,3 +12,9 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+// npm install react-app-polyfill core-js
+
+// // in App.js or main file
+
+// import 'react-app-polyfill/stable';

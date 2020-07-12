@@ -8,7 +8,7 @@ const ChatListFilter = ({setchatFilter,chatFilter})=>{
     }
     return (
         <>
-        <input value = {chatFilter} onChange = {onFilterChange}  />
+        <input placeholder='.....' className = 'chat-filter' value = {chatFilter} onChange = {onFilterChange}  />
         </>
     )
 }

@@ -20,7 +20,7 @@ const App =() =>{
     
   <context.Provider value = {{loged,setloged,user,setUser}}>
   <BrowserRouter>
-  <div>
+  <>
   <Switch>
   <PublicRoute path ='/' component ={LoginPage} exact={true}/>
   <PrivateRoute path ='/dashboard' component ={DashboardPage}/>
@@ -30,7 +30,7 @@ const App =() =>{
   <PrivateRoute path = '/profile/:id' component= {ProfilePage}/>
   <Route  component= {()=><p>fuuukkk</p>}/>
   </Switch>
-  </div>
+  </>
   </BrowserRouter>
   </context.Provider>
 

@@ -34,6 +34,7 @@ const ChatList = ({setChat,LastMsg,chatFilter,socket})=>{
             }
             socket.on('userdisconnected',(duser)=>{
                 setdiscUser(duser)
+                console.log('how tebi')
             })
     
             socket.on('userconnected',cuser=>{
@@ -92,7 +93,7 @@ const ChatList = ({setChat,LastMsg,chatFilter,socket})=>{
         user.contacts.length==0?
          <p>Empty</p>
         :
-        <div>
+        <div className = 'Chatitem-list-container'>
         <ul className="Chatitem-list">
         {
             chatList.map((message,index)=>(

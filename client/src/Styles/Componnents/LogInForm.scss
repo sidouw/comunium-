@@ -16,7 +16,8 @@
         font-size: 2rem;
     }
     &__btn{
-        background-color: $fg-color;
+        background: $white-color;
+        color: $p-color;
         font-size: larger;
         font-weight: bold;
         margin: auto;

@@ -1,5 +1,5 @@
 .MessagesList{
-    padding: 0 2rem;
+    padding: 0 .5rem;
 }
 .Message{
     position: relative;
@@ -7,26 +7,21 @@
     border-radius: 5px;
     margin: .3rem .5rem;
     flex-direction: column;
-    // background-color:transparentize($fg-color, .8)  ;
     word-break: break-all;
     list-style: none;
-
+    
     &__info{
-        // position: absolute;
-        // top: 5px;
-        // left: 13%;
         margin-left: 5rem;
         margin-top: .2rem;
-        // transform: translate(-50%);
     }
 
     &__time{  
         color: darken($white-color,42);
+        font-size: .8rem;
     }
     &__pp{
         position: absolute;
         display: flex;
-        background-color: royalblue;
         height: 3rem;
         width: 3rem;
         border-radius: 50%;

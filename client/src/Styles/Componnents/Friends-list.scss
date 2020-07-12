@@ -2,23 +2,22 @@
     overflow-x: hidden; /* Hide horizontal scrollbar */
     overflow-y: auto; /* Add vertical scrollbar */
     width: 100%;
-    
+    // background: olivedrab;
 }
 
 .item-list{
     list-style: none;
-    margin: 1rem 0 1rem -2rem;
+    margin: 0;
+    padding: 0;
     &--item{
         margin: 1rem 0;
     }
-
     &--item-text{
         font-size: 1.2rem;
         margin-left: 1rem;
         min-width: 5rem;
-        // max-width: 5rem;
         text-align: center;
-        // display: none;
+        text-overflow: clip;
     }
 
     & img{
@@ -29,7 +28,6 @@
 }
 
 .profile-link{
-    // display: none;
     color: $s-color;
     margin-left: auto;
     margin-right: .7rem;
@@ -60,3 +58,33 @@
       border-radius: 2px;
     background: $fg-color;
   }
+
+  @media(max-width:650px){
+    .item-list{
+        &--item-text{
+            min-width: 3rem;
+            font-size: 1rem;
+            margin-left: .8rem;
+        }
+  }
+
+
+  .profile-link{
+    color: $s-color;
+    margin-left: auto;
+    margin-right: .3rem;
+    padding: 0;
+    & svg{
+        max-width: .5rem;
+    }
+  }
+  
+  .chat-link{
+    color: $p-color;
+    padding: 0;
+    & svg{
+        max-width: .5rem;
+    }
+  }
+
+}

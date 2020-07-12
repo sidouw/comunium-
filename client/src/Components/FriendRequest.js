@@ -1,11 +1,12 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import {HandleRequest} from '../utils/UsersDataHandler'
+import context from '../context/context'
 
 const FriendRequest = ({Request})=>{
-
+ const {user} = useContext(context)
  const accept = ()=>{
     HandleRequest(Request._id,'A').then(data=>{
-
+        user.contacts = [...user.contacts,Request._id]
     })
  }   
 
