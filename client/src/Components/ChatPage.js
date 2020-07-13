@@ -5,7 +5,7 @@ import context from "../context/context";
 import Chat from './Chat'
 import ChatList from './ChatList'
 import ChatListFilter from './ChatListFilter'
-
+import serverURL from '../utils/ServerURL'
 const ChatPage = (props)=>{
 
         const socket = useRef()
@@ -17,11 +17,11 @@ const ChatPage = (props)=>{
         const [loadingChat,setloadingChat] = useState(true)
         const {user} = useContext(context)
         const chatIdRef = useRef('') 
-
+        const urlChatId = useRef(undefined) 
 
  
     useEffect(()=>{
-        socket.current = io.connect('127.0.1.1:5001/chat')
+        socket.current = io.connect(serverURL+'/chat')
         socket.current.emit('join',user._id,user.contacts)
         socket.current.on('message',msg=>{   
                       
@@ -43,6 +43,10 @@ const ChatPage = (props)=>{
             
         })
         
+        if(props.match.params.id){
+            urlChatId.current = props.match.params.id
+        }
+
         setloading(false)
         return ()=>{
             socket.current.emit('leave',user._id)
@@ -54,16 +58,30 @@ const ChatPage = (props)=>{
         setmsg(message)
         socket.current.emit('sendMessage',message)
     }
-        const setChat = (id)=>{
+
+    const setChat = (id)=>{
+        if(urlChatId.current){
             if (id !==chatIdRef.current ) {
-                chatIdRef.current = id
-                window.history.replaceState('', '', id)
-                getUsersRoom(id).then((room)=>{      
+                chatIdRef.current = urlChatId.current
+                window.history.replaceState('', '', 'chat/'+id)
+                getUsersRoom(urlChatId.current).then((room)=>{      
                     setroom(room)
                     setloadingChat(false)
                 })
-            }
+            }   
+            urlChatId.current=undefined
+        }else{
+                if (id !==chatIdRef.current ) {
+                    chatIdRef.current = id
+                    window.history.replaceState('', '', 'chat/'+id)
+                    getUsersRoom(id).then((room)=>{      
+                        setroom(room)
+                        setloadingChat(false)
+                    })
+                }       
         }
+
+    }
 
     return (
         loading ? 

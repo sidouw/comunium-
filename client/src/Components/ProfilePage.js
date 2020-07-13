@@ -9,6 +9,7 @@ import {AddFriend,DeleteFriend} from '../utils/UsersDataHandler'
 const ProfilePage = (props)=>{
 
     const [userProfile,setProfile] = useState({})
+    const [disableButton,setdisableButton] = useState(false)
     const [isFriend,setisFriend] = useState(false)
     const [loading,setloading] = useState(true)
     const [self,setself] = useState(false)
@@ -38,40 +39,38 @@ const ProfilePage = (props)=>{
     },[])
 
     const handleMessage = ()=>{
-        
+        props.history.push('/chat/'+userProfile._id)
     }
     const handleAddFriend = ()=>{
-        AddFriend(userProfile._id).then(data=>{
-
+        setdisableButton(true)
+        AddFriend(userProfile.username).then(({error,ok})=>{
+            
         })
-
     }
 
     const handleDeleteFriend = ()=>{
+        setdisableButton(true)
         DeleteFriend(userProfile._id).then(data=>{
-            console.log(data)
+
         })
 
     }
+
     return (
         loading ?
         <p>Loading</p>
         :
         userProfile ?
-        <div>
-        <img src='/img/Happiness.jpg' width = '200px' alt ='Profile pic '/>
-        <h2>{userProfile.username}</h2>
-        <h3>{userProfile.email}</h3>
-        <p>description : {userProfile.state}</p>
+        <div className = 'profile'>
+        <img className = 'profile__picture' src='/img/Happiness.jpg' alt ='Profile pic '/>
+        <h2 className = 'profile__name'> {userProfile.username}</h2>
+        <h3 className = 'profile__email'>Email : {userProfile.email}</h3>
         {!self &&
-            <div>
-             <button onClick = {isFriend? handleDeleteFriend: handleAddFriend}>{isFriend ? 'Delete Friend': 'Add Friend'}</button>
-             <Link to ={'/chat/'+userProfile._id}>Link</Link>
+            <div className = 'profile__buttons'>
+             <button disabled={disableButton} onClick = {isFriend? handleDeleteFriend: handleAddFriend}>{isFriend ? 'Delete Friend': 'Add Friend'}</button>
              <button onClick = {handleMessage} >Message</button>
              </div>
             }
-
-        {self && <FriendsRequestsList/>}
         
         </div>
         :

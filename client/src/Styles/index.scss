@@ -9,7 +9,8 @@
 @import './Componnents/LastChat.scss';
 @import './Componnents/FriendsPage.scss';
 @import './Componnents/FriendAdd-Form.scss';
-
+@import './Componnents/FriendRequest.scss';
+@import './Componnents/ProfilePage.scss';
 body {
   margin: 0;
   padding: 0;
@@ -22,7 +23,12 @@ body {
   color: $white-color;
 }
 
-
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
 body::-webkit-scrollbar {
   width: 0.25rem;
 }

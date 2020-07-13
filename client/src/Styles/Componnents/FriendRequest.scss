@@ -1,0 +1,44 @@
+.Reqeust{
+    display: flex;
+    align-items: center;
+    &__text{
+        margin: 0 2rem;
+        margin-right: auto;
+        font-size: 1.5rem;
+    }
+    img{
+        margin-right: 2rem;
+    }
+    button{
+        margin-left: 1rem;
+        border: none;
+        padding: .5rem 1rem;
+        font-weight: 700;
+        border-radius: 10%;
+        background: $white-color;
+        color: $p-color;;
+    }
+    button:disabled{
+        background: $s-color;
+        color: $p-color;;
+    }
+}
+
+@media(max-width:650px){
+    .Reqeust{
+    &__text{
+        margin: 0 1rem;
+        margin-right: auto;
+        font-size: 1.3rem;
+    }
+    img{
+        margin-right: 1rem;
+    }
+    button{
+        font-size: .8rem;
+        margin-left: 1rem;
+        padding: .2rem;
+        font-weight: 600;
+    }
+    }
+}

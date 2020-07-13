@@ -1,6 +1,6 @@
 
 import cookies from 'js-cookie'
-const url = 'http://127.0.1.1:5001'
+import url from './ServerURL'
 
 
 

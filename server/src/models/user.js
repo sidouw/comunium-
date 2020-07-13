@@ -1,6 +1,7 @@
 
 const {Schema,ObjectId,model} = require('mongoose');
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 /************************** User Schema **************************/
 //Username-String
 //password-String
@@ -13,7 +14,8 @@ const userSchema = new Schema(
     {
         username:{
             type:String, 
-            required:true
+            required:true,
+            unique :true
         },
         email :{
             type:String, 
@@ -75,15 +77,30 @@ userSchema.methods.genAuthToken =async function(){
 userSchema.statics.findByCred = async (username,password)=>{
     //TODO encrypt Password
     try {
-        const user = await User.findOne({username,password})
-        if (!user) {
-            throw  Error('Unable to login')
-        }
-        return user
+        const user =await User.findOne({username})
+    if(! user){
+        throw new Error('Unable to login')
+    }
+    const isAMatch = await bcrypt.compare(password,user.password)
+    if (! isAMatch) {
+        throw new Error('Unable to login')
+    }
+    return user
     } catch (error) {
         throw Error(error)
     }
 }
 
+userSchema.pre('save',async function (next) {
+    if(this.isModified('password')){
+        try {
+            this.password = await bcrypt.hash(this.password,8)
+            next()
+        } catch (error) {
+            next()
+        }
+    }
+    
+})
 const User = model("user", userSchema);
 module.exports = User;

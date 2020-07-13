@@ -1,0 +1,30 @@
+.profile{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__picture{
+        margin-top: 5rem;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: medium solid $white-color;
+    }
+
+    &__buttons{
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 2rem;
+        button{
+            border: none;
+            margin: 0;
+            padding: .5rem .5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 0 1rem;
+            background: $white-color;
+            color: $p-color;
+        }
+
+    }
+}

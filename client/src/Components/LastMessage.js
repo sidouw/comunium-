@@ -38,7 +38,7 @@ import {setMessageSeen} from '../utils/MessagesDataHandler'
         <span className = 'last-chat-elem__user'>{message.user.username}</span>
         <div className ='last-chat-elem__content__data'>
             <span className = 'last-chat-elem__message'>{message.message.body}</span>
-            <span className = 'last-chat-elem__time'>{moment.unix(message.message.icat).format("LT")}</span>
+           {message.message.icat && <span className = 'last-chat-elem__time'>{moment.unix(message.message.icat).format("LT")}</span>}
         </div>
 
         </div>

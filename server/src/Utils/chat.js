@@ -17,65 +17,74 @@ const addMessageToRoom = async (msg)=>{
 
 const UpdateState = (id,socketId)=>{
 
-  fs.access('usersStatus', fs.F_OK, (err) => {
-    if (err) {     
-      fs.writeFile('usersStatus',JSON.stringify({id:[socketId]}), function (err) {
-        if (err) throw err;
-      });
-      console.error(err)
-      return
-    }
-    fs.readFile('usersStatus', function(err, data) {
-      if(data){  
-      const UserStats =JSON.parse(data.toString())
-      if(UserStats[id]){
-        UserStats[id] = [...UserStats[id],socketId]      
-      }else{
-        UserStats[id] = [socketId]
+  try {
+    fs.access('usersStatus', fs.F_OK, (err) => {
+      if (err) {     
+        fs.writeFile('usersStatus',JSON.stringify({id:[socketId]}), function (err) {
+          if (err) throw err;
+        });
+        console.error(err)
+        return
       }
-      fs.writeFile('usersStatus',JSON.stringify(UserStats),(err)=>{
+      fs.readFile('usersStatus', function(err, data) {
+        if(data){  
+        const UserStats =JSON.parse(data.toString())
+        if(UserStats[id]){
+          UserStats[id] = [...UserStats[id],socketId]      
+        }else{
+          UserStats[id] = [socketId]
+        }
+        fs.writeFile('usersStatus',JSON.stringify(UserStats),(err)=>{
+        })
+      }
+  
       })
-    }
-
+      
     })
-    
-  })
+  } catch (error) {
+    console.log(error)
+  }
+
 
 }
 
 
 const handledisconnect = async (socketId,io) => {
-  
-  fs.readFile('usersStatus',async function(err, data) {
+  try {
+    fs.readFile('usersStatus',async function(err, data) {
     
-    if(data){
-      const UserStats =JSON.parse(data.toString())
-      
-    const UsersId = Object.keys(UserStats)
-    for (const UserId of UsersId) {
-      UserStats[UserId]=UserStats[UserId].filter(socket=>{
-        return socket!=socketId
-      })
-      
-      if (UserStats[UserId].length === 0 && UserId!=='id') {
-        try {    
-          const user = await User.findById(UserId)
-          if (user) {
-              user.contacts.forEach(contact => {  
-                io.of('/chat').to(contact).emit('userdisconnected',user._id)  
-              })
+      if(data){
+        const UserStats =JSON.parse(data.toString())
+        
+      const UsersId = Object.keys(UserStats)
+      for (const UserId of UsersId) {
+        UserStats[UserId]=UserStats[UserId].filter(socket=>{
+          return socket!=socketId
+        })
+        
+        if (UserStats[UserId].length === 0 && UserId!=='id') {
+          try {    
+            const user = await User.findById(UserId)
+            if (user) {
+                user.contacts.forEach(contact => {  
+                  io.of('/chat').to(contact).emit('userdisconnected',user._id)  
+                })
+            }
+          } catch (error) {
+            console.log(error)
           }
-        } catch (error) {
-   
-        }
-       }
+         }
+      }
+  
+  
+      fs.writeFile('usersStatus',JSON.stringify(UserStats),(err)=>{
+      })
     }
-
-
-    fs.writeFile('usersStatus',JSON.stringify(UserStats),(err)=>{
     })
+  } catch (error) {
+    console.log(error)
   }
-  })
+
 
 }
 
@@ -109,29 +118,34 @@ const handleChat = (server)=>{
 
     socket.on('online',(friends,callback)=>{
 
-      fs.access('usersStatus', fs.F_OK, (err) => {
-        if (err) {    
-          callback([])
-          console.error(err)
-          return
-        }else{
-          fs.readFile('usersStatus', function(err, data) {
-            if(data){
-            const UserStats =JSON.parse(data.toString())
-            const online = []
-            friends.forEach(friend=>{
-              if(UserStats[friend] && UserStats[friend].length>0){
-                online.push(friend)
-              }             
-            })
-            callback(online)
-          }else{
+      try {
+        fs.access('usersStatus', fs.F_OK, (err) => {
+          if (err) {    
             callback([])
+            console.error(err)
+            return
+          }else{
+            fs.readFile('usersStatus', function(err, data) {
+              if(data){
+              const UserStats =JSON.parse(data.toString())
+              const online = []
+              friends.forEach(friend=>{
+                if(UserStats[friend] && UserStats[friend].length>0){
+                  online.push(friend)
+                }             
+              })
+              callback(online)
+            }else{
+              callback([])
+            }
+    
+            })
           }
-  
-          })
-        }
-      })
+        })
+      } catch (error) {
+        console.log(error)
+      }
+
 
     })
     socket.on('leave',(room)=>{

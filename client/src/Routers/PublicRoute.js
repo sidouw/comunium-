@@ -7,7 +7,7 @@ import {authanticate} from '../utils/auth'
 
 const PublicRoute= ({component:Component,...rest})=>{
     const [loading,setloading] = useState(true)
-    const {loged,setloged,setUser} = useContext(context)
+    const {loged,setloged,setUser,user} = useContext(context)
     useEffect(()=>{
         authanticate().then((data)=>{
             if(data){
@@ -38,7 +38,7 @@ const PublicRoute= ({component:Component,...rest})=>{
             <Component {...props}/>
             </div> 
             :
-            <Redirect to='/dashboard'/>
+            <Redirect to={'/profile/'+user._id}/>
         )} />
     )
 

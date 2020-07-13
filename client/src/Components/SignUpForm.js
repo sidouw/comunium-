@@ -21,7 +21,7 @@ const Submited = (e)=>{
         }
         setUser(data.user)
         cookies.set('token',data.token)
-        push('/dashboard')
+        push('/profile/'+data.user._id)
     })
 }
 
